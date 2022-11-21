@@ -11,47 +11,20 @@ if(isset($_POST['username']) && isset($_POST['password'])){
     $result = mysqli_query($db, $sql);
     $data = mysqli_fetch_array($result);
     
-  //if(mysqli_fetch_row($result)>0){
-    if(password_verify($password, $data['password'])){
-      $_SESSION['nama'] = $data['nama'];
-      $_SESSION['hak_akses'] = $data['hak_akses'];
+  if($data){
+      if(password_verify($password, $data['password'])){
+        $_SESSION['nama'] = $data['nama'];
+        $_SESSION['hak_akses'] = $data['hak_akses'];
 
-      header("Location: index.php");
-      exit;
+        header("Location: index.php");
+      } else {
+          $pesan = "Password Salah";
+      }
     } else {
-      $pesan = "Username / Password Salah";
-    }
-  /*} else {
-    $pesan = "Username Tidak Terdaftar";
-  }*/
+      $pesan = "Username Salah";
+    } 
       
 }
-
-/*if (isset($_POST['login'])){
-  include "config.php";
-  $username = $_POST['username'];
-  $password = $_POST['password'];
-
-  if($username == '' or $password == ''){
-    $pesan = "Silahkan Masukan Username dan Password";
-  } else {
-    $sql = "SELECT * FROM data_diri1 WHERE username = '$username'";
-    $result = mysqli_query($db, $sql);
-    $data = mysqli_fetch_array($result);
-
-    if ($username, $data['username']){
-      $pesan = "Username Tidak Terdaftar";
-    } elseif ($data['password'] !== ''){
-      $pesan = "Password Salah";  
-    } elseif(password_verify($password, $data['password'])){
-      $_SESSION['nama'] = $data['nama'];
-      $_SESSION['hak_akses'] = $data['hak_akses'];
-
-      header("Location: index.php");
-      exit;
-    } 
-  }
-}*/
 
 ?>
 
